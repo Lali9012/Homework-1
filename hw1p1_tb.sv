@@ -2,32 +2,38 @@
 
 module hw1p1_tb();
 
-  reg x, y;
-  reg clk, reset;
-  wire S;
+  logic x, y;
+  logic clk, reset;
+  logic S;
 
-  hw1p1 dut ( x, y, clk, reset, S);
+  hw1p1 dut (.*);
+  parameter ClOCK_PERIOD = 100;
+  
 
-  intial begin
+  initial begin
     clk = 0;
-
-    forever #5 clk = ~ clk;
+    forever #(CLOCK_PERIOD/2) clk = ~ clk;
   end
 
-  intial begin
-    x = 0; y = 0; reset = 1;
-    #10 reset = 0;
+  initial begin
+
+    reset <= 1; x<=0; y <=0; @(posedge clk);
+    reset <= 0; x<=0; y <=0; @(posedge clk);
+    x <=0; y<=1; @(posedge clk);
+    x <=1; y<=0; @(posedge clk);
+    x <=1; y<=1; @(posedge clk);
+
+    x <=0; y<=0; @(posedge clk);
+    x <=1; y<=1; @(posedge clk);
+    x <=0; y<=1; @(posedge clk);
+    x <=1; y<=0; @(posedge clk);
+
+    reset <=1; @(posedge clk);
+    reset <= 0; x<=1; y <=1; @(posedge clk);
+    x <=0; y <=0; @(posedge clk);
+
+    $stop;
     
-    #10 x =0; y = 0;
-    #10 x =0; y = 1;
-    #10 x =1; y = 0;
-    #10 x =1; y = 1;
-
-    #10 x =0; y = 1;
-    #10 x =1; y = 1;
-    #10 x =0; y = 0;
-
-    # 50 $stop;
   end
 endmodule
     
