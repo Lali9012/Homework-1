@@ -1,26 +1,25 @@
-module hw1p1 (
-    input x,
-    input y,
-    input clk,
-    input reset,
-    output s,
+module hw1p1 (x, y, clk, reset, S); 
+    input logic x,
+    input logic y,
+    input logic  clk,
+    input logic  reset,
+    output logic s,
 
 );
 
-reg Q;
-wire c;
+    logic Q;
+    logic c;
 
-assign S = x ^ y ^ Q;
-assign C = ( x&y) | ( x& Q) | ( y & Q);
+    assign S = x ^ y ^ Q;
+    assign C = ( x&y) | ( x& Q) | ( y & Q);
+    
+    always_ff @( posedge clk or posedge reset)  begin
 
-always @( posedge clk, posedge reset) 
- begin
+    if (reset)
+      Q <= 0;
 
- if (reset)
-    Q <= 1'b0;
-
- else
-    Q <= C;
-end
+    else
+      Q <= C;
+   end
 
 endmodule
