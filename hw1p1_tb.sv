@@ -7,12 +7,12 @@ module hw1p1_tb();
   logic S;
 
   hw1p1 dut (.*);
-  parameter ClOCK_PERIOD = 100;
+  parameter CLOCK_PERIOD = 100;
   
 
   initial begin
     clk = 0;
-    forever #(CLOCK_PERIOD/2) clk = ~ clk;
+    forever #(CLOCK_PERIOD/2) clk = ~clk;
   end
 
   initial begin
